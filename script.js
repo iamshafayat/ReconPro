@@ -69,7 +69,19 @@
             65: { name: "API Endpoints", dork: 'inurl:api | site:*/rest | site:*/v1 | site:*/v2 | site:*/v3', category: "API Exposure", risk: "medium", description: "Find exposed API endpoints" },
             66: { name: "API Documentation", dork: 'inurl:apidocs | inurl:api-docs | inurl:swagger | inurl:api-explorer', category: "API Exposure", risk: "low", description: "Find API documentation portals" },
             67: { name: "Sensitive DATA Leak", dork: '"date of birth" ext:pdf', category: "Sensitive Data Exposure", risk: "critical", description: "Find documents containing personally identifiable information (PII)" },
-            68: { name: "Exposed Config & Log Files", dork: "ext:log | ext:txt | ext:conf | ext:cnf | ext:ini | ext:env | ext:sh | ext:bak | ext:backup | ext:swp | ext:old | ext:~ | ext:git | ext:svn | ext:htpasswd | ext:htaccess | ext:json", category: "File Exposure", risk: "high", description: "Find exposed configuration, log, and backup files" }
+            68: { name: "Exposed Config & Log Files", dork: "ext:log | ext:txt | ext:conf | ext:cnf | ext:ini | ext:env | ext:sh | ext:bak | ext:backup | ext:swp | ext:old | ext:~ | ext:git | ext:svn | ext:htpasswd | ext:htaccess | ext:json", category: "File Exposure", risk: "high", description: "Find exposed configuration, log, and backup files" },
+            69: { name: "Security.txt Bounty", dork: 'site:*/security.txt "bounty"', category: "Domain Intelligence", risk: "low", description: "Find security.txt files mentioning bounty or vulnerability disclosure" },
+            70: { name: "Security.txt", dork: 'inurl:/.well-known/security.txt', category: "Domain Intelligence", risk: "low", description: "Find standard security.txt files for vulnerability disclosure" },
+            71: { name: "Disclosure Policy", dork: '"vulnerability disclosure" inurl:policy', category: "Domain Intelligence", risk: "low", description: "Find vulnerability disclosure policies" },
+            72: { name: "Open S3 Buckets", dork: 'intitle:"Index of" "s3.amazonaws.com"', category: "Cloud Storage Exposure", risk: "high", description: "Find exposed Amazon S3 buckets" },
+            73: { name: "Azure Blobs", dork: 'site:blob.core.windows.net "index of"', category: "Cloud Storage Exposure", risk: "high", description: "Find exposed Azure storage blobs" },
+            74: { name: "Google Cloud Buckets", dork: 'site:storage.googleapis.com "index of"', category: "Cloud Storage Exposure", risk: "high", description: "Find exposed Google Cloud Storage" },
+            75: { name: "Firebase DB", dork: 'inurl:firebaseio.com "authDomain"', category: "Cloud Storage Exposure", risk: "critical", description: "Find misconfigured Firebase databases" },
+            76: { name: "Exposed API Keys", dork: '"api_key" ext:env | ext:json | ext:yaml', category: "Sensitive Data Exposure", risk: "critical", description: "Find leaked API keys in config files" },
+            77: { name: "Bearer Tokens", dork: '"Authorization: Bearer" filetype:log', category: "Sensitive Data Exposure", risk: "critical", description: "Find exposed authentication tokens in logs" },
+            78: { name: "phpMyAdmin Panels", dork: 'intitle:"phpMyAdmin" "running on"', category: "Remote Management", risk: "high", description: "Find phpMyAdmin instances" },
+            79: { name: "Remote Login", dork: 'inurl:remote/login | inurl:remote/desktop', category: "Remote Management", risk: "medium", description: "Find remote access login portals" },
+            80: { name: "Exposed Cameras", dork: '"Network Camera" inurl:view/view.shtml', category: "IoT Devices", risk: "high", description: "Find exposed IP cameras" },
         };
 
         // ======================
@@ -93,39 +105,35 @@
         // ======================
         function buildSearchUrl(dorkId, target) {
             const dork = dorkDatabase[dorkId];
-            
+        
+           
             if (dork.special) {
-                return dork.url + encodeURIComponent(target) + (dork.suffix || '');
+                return dork.url + (target ? encodeURIComponent(target) : '') + (dork.suffix || '');
             }
-            
-            return `https://www.google.com/search?q=${encodeURIComponent(`site:${target} ${dork.dork}`)}`;
+        
+         
+            if (target) {
+                return `https://www.google.com/search?q=${encodeURIComponent(`site:${target} ${dork.dork}`)}`;
+            }
+        
+           
+            return `https://www.google.com/search?q=${encodeURIComponent(dork.dork)}`;
         }
-
+        
         function search(dorkId) {
             const target = document.getElementById('target').value.trim();
-            if (!target) {
-                alert('Please enter a target domain first');
-                return;
-            }
-
-            // Validate domain format
-            if (!/^([a-z0-9-]+\.)+[a-z]{2,}$/i.test(target)) {
-                alert('Please enter a valid domain (example.com)');
-                return;
-            }
-
             const url = buildSearchUrl(dorkId, target);
-            
-            // Add to history
-            addToHistory(dorkId, target);
-            
-            // Update selected dork for preview
+        
+           
+            if (target) {
+                addToHistory(dorkId, target);
+            }
+        
             state.selectedDork = dorkId;
             updateQueryPreview();
-            
-            // Open search in new tab
             window.open(url, '_blank');
         }
+        
 
         function addToHistory(dorkId, target) {
             const entry = {
