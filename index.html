@@ -1,121 +1,22 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReconPro | Ultimate Bug Bounty Toolkit</title>
-    <link href="img/favicon.ico" rel="icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-search"></i> ReconPro</h1>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
-        </header>
-
-        <section class="search-section">
-            <div class="search-container">
-                <input type="text" id="target" class="search-input" 
-                       placeholder="Enter target domain (example.com)" 
-                       autocomplete="off" autofocus>
-                <button class="btn btn-primary" id="quickSearch">
-                    <i class="fas fa-bolt"></i> Quick Search
-                </button>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-outline" data-preset="wordpress">
-                    <i class="fab fa-wordpress"></i> WordPress Scan
-                </button>
-                <button class="btn btn-outline" data-preset="sqli">
-                    <i class="fas fa-database"></i> SQLi Checks
-                </button>
-                <button class="btn btn-outline" data-preset="subdomains">
-                    <i class="fas fa-sitemap"></i> Subdomains
-                </button>
-            </div>
-            <div id="queryPreview" class="query-preview" style="display: none;"></div>
-        </section>
-
-        <div class="controls">
-            <div class="filter-group">
-                <select id="categoryFilter">
-                    <option value="">All Categories</option>
-                    <option value="File Exposure">File Exposure</option>
-                    <option value="Web Applications">Web Applications</option>
-                    <option value="CMS Vulnerabilities">CMS Vulnerabilities</option>
-                    <option value="Code Repositories">Code Repositories</option>
-                    <option value="Domain Intelligence">Domain Intelligence</option>
-                    <option value="Flash/SWF Files">Flash/SWF Files</option>
-                    <option value="File Uploads">File Uploads</option>
-                </select>
-                <select id="riskFilter">
-                    <option value="">All Risks</option>
-                    <option value="critical">Critical Risk</option>
-                    <option value="high">High Risk</option>
-                    <option value="medium">Medium Risk</option>
-                    <option value="low">Low Risk</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <input type="text" id="searchFilter" class="search-filter" 
-                       placeholder="Search dorks...">
-            </div>
-        </div>
-
-        <div class="tabs">
-            <div class="tab active" data-tab="all">All Dorks</div>
-            <div class="tab" data-tab="favorites">Favorites</div>
-            <div class="tab" data-tab="history">History</div>
-        </div>
-
-        <div id="allDorks" class="tab-content active">
-            <div class="dorks-grid" id="dorksContainer">
-                <!-- Dorks will be loaded here -->
-            </div>
-        </div>
-
-        <div id="favoritesTab" class="tab-content">
-            <div class="dorks-grid" id="favoritesContainer">
-                <!-- Favorites will be loaded here -->
-            </div>
-        </div>
-
-        <div id="historyTab" class="tab-content">
-            <div class="dorks-grid" id="historyContainer">
-                <!-- History will be loaded here -->
-            </div>
-        </div>
-
-        <!-- Dork Selection Popup -->
-        <div id="dorkSelectionPopup" class="popup">
-            <div class="popup-content">
-                <h3 id="popupTitle">WordPress Scan</h3>
-                <div class="dork-list" id="dorkListContainer"></div>
-                <div class="popup-actions">
-                    <button id="cancelPopup">Cancel</button>
-                    <button id="confirmPopup">Open Selected</button>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>
-                Made with ❤️ by
-                <a href="https://www.linkedin.com/in/iamshafayat" target="_blank" rel="noopener noreferrer">
-                Shafayat Ahmed Alif</a>
-                for Security Researchers
-            </p>            
-        </footer>
-    </div>
-    <script src="script.js" defer></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReconPro - Bug Bounty & Recon Toolkit</title>
+    <meta name="description" content="Professional web reconnaissance and Google dorking toolkit for security researchers and penetration testers." />
+    <meta property="og:title" content="ReconPro - Bug Bounty & Recon Toolkit" />
+    <meta property="og:description" content="Professional web reconnaissance and Google dorking toolkit for security researchers and penetration testers." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/assets/index-CvW68AZV.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DDX5V7uD.css">
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+    <div id="root"></div>
+  </body>
 </html>
-
-
 
